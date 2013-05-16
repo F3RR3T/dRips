@@ -1,0 +1,54 @@
+
+#######################################################################
+#   clean a path and unlist it (for setDir())
+#     - expects Windows backslashes '\'
+cleanPath <- function(filename = choose.files()){
+  x <- gsub('\\\\','/', filename)  # nice easy way to find and clean the path
+	y <- (gregexpr('/', x))     # vector of positions of /
+	return(list(path=x, pos=y))
+}
+
+#######################################################################
+#   takes CleanPath() output as arg, returns just the filename
+justFile <- function(x) {
+    pos <- unlist(x$pos)
+    pos <- pos[length(pos)]
+    fname <- substring(x$path, pos+1, nchar(x$path))
+    return(fname)
+}
+
+#######################################################################
+#   this one allows you to use shortcuts (nicer file picker)
+setDir <- function(){
+  x <- cleanPath()                        # list of path + filename
+  y <- x$pos[length(x$pos)]                       # just the last one
+	y <- substring(x$path, 1, y-1)               # the directory!
+	setwd(y)
+	print(sprintf('working Dir set to %s', getwd()))
+	return(y)
+}
+
+#######################################################################
+#       yymmdd date format
+yymmdd <- function(thisDate = Sys.Date()){
+  return(format(thisDate, '%y%m%d'))
+}
+#######################################################################
+#		    creates a new subdirectory, defaulting to the current date
+#         - subdirectory of a directory called 'plot'
+#         - So if you are creating lots of plots they are collected by date
+plotDir <- function(pdir = 'plot', ...){
+	plot_dir <- paste(pdir, '/', yymmdd(...), sep='')
+	dir.create(plot_dir, rec=T)
+	return(plot_dir)
+}
+
+
+
+#######################################################################
+#  nukem - erase all objects (after asking nicely)
+nukem <- function(){
+  x <- readline ("\n\tErase all objects? (Y)")
+  if (tolower(substr(x, 1, 1)) != "n") {rm(list=ls(all=TRUE))}# NUKE all objects
+  else {print("Nothing was changed.")}
+}
