@@ -3,6 +3,17 @@
 #   http://en.wikipedia.org/wiki/Monty_hall_problem
 #   SJP 25 Oct 2007
 # 
+
+#------------------------ Instructions -----------------
+#  Read the wikipedia article for background
+#  source this file into R.
+#  The game() function is played out, using both strategies, swapping or not swapping
+#   After Monty opens one of the doors that you didn't choose and invites you to swap.
+
+#   Play around with the game() function, 
+#   changing the number of trials (iterations) and doors etc.
+#     The comments in the code are fairly good (EIIDSSM!)
+#
 #   consts
 NUMDOORS <- 3    #
 GOAT <- 0
@@ -24,6 +35,26 @@ allocPrize <- function(d=NUMDOORS){
 	door[getDoor()] <- PRIZE               # put the prize behind a door
 	return(door)
 }
+#######################################################################
+#	Get a result based on a probability  (default is 0.5)
+#	 a typical usage is: 'if(pr(x)) then ...
+pr <- function(x = 0.5){
+	if (!length(x)) {return()}
+	if (x<0 || x>1) stop(" prob out of range\n")
+	return(ifelse(rbinom(length(x), 1, x), TRUE, FALSE))
+}
+#######################################################################
+#	junkYard()		place a silent stop() at the end of a source file
+#	in effect, the rest of the file is the junkYard of half-good script
+junkYard <- function(){
+	op <- getOption('show.error.messages')		# save settings
+#	options(show.error.messages = F)	# don't warn
+	cat('called from junkYard()\n')
+#	print( parent.frame())
+	try(stop(), silent=T)
+	return('how did this get here?')
+}
+
 
 ###############################################################
 #  game() function
