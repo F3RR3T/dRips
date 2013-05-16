@@ -16,6 +16,41 @@ justFile <- function(x) {
     return(fname)
 }
 
+#######################################################################
+#	heading - take a string and print it out with underline
+#	Useful for formatting output text files
+#
+headingFunc <- function(string, ul='=', caps=T){
+	if(length(string) != 1) string <- 'Error in headingFunc'
+	if(class(string) != 'character') string <- as.character(string)
+	if(caps) string <- toupper(string)
+	cat('\n', string, '\n', sep='')
+	reps <- floor(nchar(string) / nchar(ul))
+	filler <- substr(ul, 1, (nchar(string) %% nchar(ul)))
+	cat(rep(ul, reps), filler, '\n\n', sep='')
+}
+
+############  handy for debugging #####################################
+#######################################################################
+#	unWarn - set options()
+unWarn <- function() options( warn = -1)
+#######################################################################
+#	Warn - set options()
+warn <- function() options( warn = 0)
+
+#######################################################################
+#	sort of created by mistake when Joe typed htail
+#  	prints the head and tail of a datframe or array.
+#	-- separates head from tail with a row of '...' (can be buggy)
+#	 you can pass in lengths for head and tail if you want to.
+htail <- function(x, min_obs=15, ...){
+  if(dim(x)[1] < min_obs) return(x)
+  hd <- head(x, ...)
+  tl <- tail(x, ...)
+  dots <- rep('...', ncol(x))
+  res <- rbind(hd, '...'=dots, tl)
+  return(res)
+}
 
 #######################################################################
 #  nukem - erase all objects (after asking nicely)
