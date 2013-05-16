@@ -1,0 +1,38 @@
+#######################################################################
+#  Get a result based on a probability  (default is 0.5)
+#	 a typical usage is: 'if(pr(x)) then ...
+#   The default case is equivalent to tossing a coin
+#   You can pass in a vector of probabilties to get a vector of T, F results
+#
+pr <- function(x = 0.5){
+	if (!length(x)) {return()}
+	if (x<0 || x>1) stop(" prob out of range\n")
+	return(ifelse(rbinom(length(x), 1, x), TRUE, FALSE))
+}
+
+
+#######################################################################
+#       multinomial randomiser; by S.B.   extended by S.P.
+#       n - length of result vector
+#       p - vector of probabilities; has to sum to <= 1
+#       val - vector of return values, with length == p or:
+#  if longer than p, should be 1 element longer (LAST element is returned)
+rMulti <- function(n=1, p, val) {
+	res <- 1:n
+	for(i in res) {
+ 		element <- ((1:length(p))[runif(1)<cumsum(p)])
+		r <-val[element[1]]
+		if (is.na(r)) r <- val[length(val)]
+        res[i] <-  r
+  		names(res)[i] <- names(r)
+	}
+	return(res)
+}
+
+#######################################################################
+#  calcPert - for Netica - calc Beta params from pert(min, mode, max)
+calcPert <- function(mini, mod, maxi) {
+	alpha <- (4*mod + maxi - 5*mini) / (maxi - mini)
+	betar <- (5*maxi - mini - 4*mod) / (maxi - mini)
+	return(unlist(list(alpha=alpha, beta=betar)))
+}
