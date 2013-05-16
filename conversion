@@ -1,0 +1,18 @@
+#######################################################################
+#   f2c
+#   convert evil Fahrenheit to Celcius
+#   SJP     April 2007
+f2c <- function(deg, sc='F', string=FALSE){
+#   sc == scale (default is f therefore cvt tfrom F to C)
+  sc <- substr(toupper(sc),1,1)       # clean input
+	if (sc=='F'){
+	    res <- (deg - 32) * (5/9)
+	    to <- 'C'
+	} else {
+	    res <- deg * 1.8 + 32
+	    to <- 'F'; sc <- 'C'
+	}
+	if (string) res <- sprintf('Converted from %i %1s to %i %1s.', 
+						round(deg, 0), sc, round(res, 0), to)
+	return(res)
+}
