@@ -16,3 +16,16 @@ f2c <- function(deg, sc='F', string=FALSE){
 						round(deg, 0), sc, round(res, 0), to)
 	return(res)
 }
+
+###########  Exponential growth functions #############################
+
+#######################################################################
+#   convert growth rate ('interest rate' version) to doubling time
+dblTime <- function(x) {
+	return(log(2)/log(1 + x))
+}
+#######################################################################
+#	convert doubling time to 'interest rate'
+intRate <- function(x) {
+	return((exp(log(2)/x))-1)
+}
