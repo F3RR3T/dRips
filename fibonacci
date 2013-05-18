@@ -1,0 +1,22 @@
+#  fiBonacci.R
+#	playing with recursion coz bored
+#	Stephen Pratt			25/08/2009 4:19:50 PM	
+
+#######################################################################
+#      Recursive version of Fibonacci series   (very inefficient)
+fiBonacci <- function(n, count = T, first = T){
+	if(first) i <<- 0
+	if(count) i <<- i + 1
+	if(as.integer(n) %in% 0:1) return(n)
+	fib <- fiBonacci(n = n-1, co=count, f=F) + fiBonacci(n = n-2, co=count, f=F)
+	ifelse(first, return(list(fib = fib, i = i)), fib)
+}
+#######################################################################
+#     dreaded for-loop version of Fibonacci series
+fiB <- function(n){
+	fib <- NULL
+	fib[1] <- 0			# indexes offset by 1 because R can't handle x[0]
+	fib[2] <- 1
+	for(i in 3:(n+1)) fib[i] <- fib[i-1] + fib[i-2]
+	return(fib)
+}
