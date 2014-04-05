@@ -6,7 +6,7 @@
 #   ..later.. I like to reduce the size to 80% in MS word  - it makes the axis
 #   lables and other writing a bit smaller (I spuppose I could use cex=.8 or somthing)
 myemf <- function(filename, wdt=15, hgt = 12, pdir=plot_dir, has_title = F){
-  if(!exists('plot_dir')) plot_dir <- plotDir()
+  if(!exists('pdir')) plot_dir <- plotDir()
 	filename <- paste(pdir, '/', filename, '.emf', sep='')
 	win.metafile(file=filename, width=wdt/2.54, height=hgt/2.54)
 	cat('Plotting to', filename, '\n')
